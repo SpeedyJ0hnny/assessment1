@@ -1,40 +1,63 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 void rotCyph(char *array, int key,int size, int choice);
 void makeFiles(void);
+void subCyph(char *array, char *keyStr, int size, int choice);
 
 int main(){
     int size = 400;
     char preDecrypt[size];
     int key;
-    int choice;
+    char keyStr[] = "QWERTYUIOPLKJHGFDSAZXCVBNM";
+    int choice, specific;
     int alreadyWritten;
 
     printf("Is read.txt already populated with text? (0/1)\n");
     scanf("%d",&alreadyWritten);
+
         if (alreadyWritten==0){
             makeFiles();
             printf("Please write text to read.txt and save it. Press enter when done.\n");
             getchar(); getchar();
         }
-    printf("Would you like to encrypt or decrypt? (0/1)\n");
+
+    printf("Would you like to encrypt or decrypt?\n(0/1)\n");
     scanf("%d",&choice);
-    printf("Please select a key value:\n");
-    scanf("%d",&key);
+    printf("Substitution or Rotation?\n(0/1)");
+    scanf("%d",&specific);
+    if (specific==1){
+        printf("Please select a key value:\n");
+        scanf("%d",&key);
+    }
+    /*if (specific==0){
+        printf("Please type key for substition:\n");
+        scanf("%s",keyStr);
+    }*/
 
         for (int zeros=0;zeros<size;zeros++){
             preDecrypt[zeros]=0;
-        }
+            }
+
     FILE *read;
     FILE *write;
     read = fopen("read.txt","r");
     write = fopen("write.txt", "w");
 
     fgets(preDecrypt, size, (FILE *)read);
-    rotCyph(preDecrypt, key, size, choice);
+        if (specific==1){
+        rotCyph(preDecrypt, key, size, choice);
+        }
+        if (specific==0){
+        subCyph(preDecrypt, keyStr, size, choice);
+        }
     fprintf(write, "%s\n", preDecrypt);
+    printf("%s", preDecrypt);
 }
+
+
+
 void makeFiles(void){
     FILE *read;
     FILE *write;
@@ -43,6 +66,9 @@ void makeFiles(void){
     fclose(read);
     fclose(write);
 }
+
+
+
 void rotCyph(char *array, int key, int size, int choice){
     for (int x=0;x<size;x++){
         if (choice == 1){
@@ -78,3 +104,8 @@ void rotCyph(char *array, int key, int size, int choice){
     }
 }
 
+
+
+void subCyph(char *array, char *keyStr, int size, int choice){
+
+}
