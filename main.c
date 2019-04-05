@@ -10,11 +10,11 @@ int main(){
     int size = 400;
     char preDecrypt[size];
     int key;
-    char keyStr[] = "QWERTYUIOPLKJHGFDSAZXCVBNM";
+    char keyStr[] = "QWERTYUIOPASDFGHJKLZXCVBNM";
     int choice, specific;
     int alreadyWritten;
 
-    printf("Is read.txt already populated with text? (0/1)\n");
+    printf("Is read.txt already populated with the text to be encrypted/decrypted? \n(0/1)\n");
     scanf("%d",&alreadyWritten);
 
         if (alreadyWritten==0){
@@ -25,7 +25,7 @@ int main(){
 
     printf("Would you like to encrypt or decrypt?\n(0/1)\n");
     scanf("%d",&choice);
-    printf("Substitution or Rotation?\n(0/1)");
+    printf("Substitution or Rotation?\n(0/1)\n");
     scanf("%d",&specific);
     if (specific==1){
         printf("Please select a key value:\n");
@@ -107,5 +107,30 @@ void rotCyph(char *array, int key, int size, int choice){
 
 
 void subCyph(char *array, char *keyStr, int size, int choice){
+    int keyDistance;
+        for (int x=0;x<size;x++){
+            if (choice==0){
+                if (array[x]>=97&&array[x]<=122){
+                    array[x]=array[x]-32;
+                }
+                if (array[x]>=65&&array[x]<=90){
+                    keyDistance=array[x]-65;
+                    array[x]=keyStr[keyDistance];
+                    }
+                }
+            if (choice==1){
+                if (array[x]>=97&&array[x]<=122){
+                    array[x]=array[x]-32;
+                }
+                if (array[x]>=65&&array[x]<=90){
+                    keyDistance=0;
+                    while (array[x]!=keyStr[keyDistance]){
+                        keyDistance++;
+                    }
+                    array[x]=keyDistance+65;
+                }
+            }
+        }
+
 
 }
