@@ -5,13 +5,14 @@
 void rotCyph(char *array, int key,int size, int choice);
 void makeFiles(void);
 void subCyph(char *array, char *keyStr, int size, int choice);
+void forceRot(char *array, int size);
 
 int main(){
     int size = 400;
     char preDecrypt[size];
     int key;
     char keyStr[] = "QWERTYUIOPASDFGHJKLZXCVBNM";
-    int choice, specific;
+    int choice, specific,force=1;
     int alreadyWritten;
 
     printf("Is read.txt already populated with the text to be encrypted/decrypted? \n(0/1)\n");
@@ -27,8 +28,13 @@ int main(){
     scanf("%d",&choice);
     printf("Substitution or Rotation?\n(0/1)\n");
     scanf("%d",&specific);
-    if (specific==1){
-        printf("Please select a key value:\n");
+    if (choice==1){
+        printf("Do you have the key? (0/1)\n");
+        scanf("%d",&force);
+    }
+
+    if (specific==1&&force==1){
+        printf("Please select a key value for rotation:\n");
         scanf("%d",&key);
     }
     /*if (specific==0){
@@ -46,14 +52,22 @@ int main(){
     write = fopen("write.txt", "w");
 
     fgets(preDecrypt, size, (FILE *)read);
-        if (specific==1){
+        if (specific==1&&force==1){
         rotCyph(preDecrypt, key, size, choice);
         }
-        if (specific==0){
+        if (specific==0&&force==1){
         subCyph(preDecrypt, keyStr, size, choice);
         }
+        if (specific==1&&force==0){
+        forceRot(preDecrypt, size);
+            fgets(preDecrypt, size, (FILE*)read);
+            printf("Which Line contained the correct string?\n");
+            scanf("%d",&key);
+            rotCyph(preDecrypt,key,size,1);
+            printf("%s \nWritten to file.\n",preDecrypt);
+        }
     fprintf(write, "%s\n", preDecrypt);
-    printf("%s", preDecrypt);
+    printf("%s\n", preDecrypt);
 }
 
 
@@ -134,3 +148,27 @@ void subCyph(char *array, char *keyStr, int size, int choice){
 
 
 }
+
+
+
+void forceRot (char *array, int size){
+    for (int count=1;count<27;count++){
+        for (int x=0; x<size;x++){
+            if (array[x]>=97&&array[x]<=122){
+                array[x]=array[x]-32;
+            }
+            if (array[x]>=65&&array[x]<=90){
+                for (int a=0;a<1;a++){
+                    array[x]--;
+                        if (array[x]<65){
+                            array[x]=90;
+                        }
+                }
+            }
+        }
+    //compare to dictionary, find match
+    printf("Key || String\n  %d: %s\n",count,array);
+    sleep(1);
+    }
+}
+
