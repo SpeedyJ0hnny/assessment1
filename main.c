@@ -6,10 +6,13 @@ void rotCyph(char *array, int key,int size, int choice);
 void makeFiles(void);
 void subCyph(char *array, char *keyStr, int size, int choice);
 void forceRot(char *array, int size);
+void forceSub(char *array, int size, char *dictionaryArr);
 
 int main(){
     int size = 400;
+    int wordsLength = 721;
     char preDecrypt[size];
+    char DictionaryArr[wordsLength];
     int key;
     char keyStr[] = "QWERTYUIOPASDFGHJKLZXCVBNM";
     int choice, specific,force=1;
@@ -48,6 +51,8 @@ int main(){
 
     FILE *read;
     FILE *write;
+    FILE *dictionary;
+    dictionary = fopen("dictionary.txt","r");
     read = fopen("read.txt","r");
     write = fopen("write.txt", "w");
 
@@ -65,6 +70,9 @@ int main(){
             scanf("%d",&key);
             rotCyph(preDecrypt,key,size,1);
             printf("%s \nWritten to file.\n",preDecrypt);
+        }
+        if (specific==0&&force==0){
+        forceSub(preDecrypt, size, DictionaryArr);
         }
     fprintf(write, "%s\n", preDecrypt);
     printf("%s\n", preDecrypt);
@@ -172,3 +180,12 @@ void forceRot (char *array, int size){
     }
 }
 
+
+void forceSub(char *array, int size, char *dictionaryArr){
+    if (fopen("dictionary.txt","r")==NULL){
+        printf("Unable to open dictionary. Ensure dictionary.txt is in same file directory");
+        return;
+    }
+    
+
+}
