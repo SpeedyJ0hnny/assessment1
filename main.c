@@ -53,10 +53,10 @@ int main(){
         printf("Please select a key value for rotation:\n");
         scanf("%d",&key);
     }
-    /*if (specific==0&&force==1){ //same as rotation above except for substitution.
+    if (specific==0&&force==1){ //same as rotation above except for substitution.
         printf("Please type key for substition (Capital letters only):\n");
         scanf("%s",keyStr);
-    }*/
+    }
 
         for (int zeros=0;zeros<size;zeros++){
             preDecrypt[zeros]=0; //for loop which sets every value of the array to zero. goes from 0 - (size-1) because that is how arrays are indexed.
@@ -67,8 +67,6 @@ int main(){
  */
     FILE *read; //pointers to the files
     FILE *write;
-    FILE *dictionary;
-    dictionary = fopen("dictionary.txt","r"); //telling the program where the file is and how it should be opened.
     read = fopen("read.txt","r");
     write = fopen("write.txt", "w");
 
@@ -209,10 +207,5 @@ void forceRot (char *array, int size){
  */
 
 void forceSub(char *array, int size, char *dictionaryArr){
-    if (fopen("dictionary.txt","r")==NULL){ //must be able to open dictionary, otherwise function will fail.
-        printf("Unable to open dictionary. Ensure dictionary.txt is in same file directory");
-        return;
-    }
-    
-
+    printf("Not Implemented :(\n");
 }
